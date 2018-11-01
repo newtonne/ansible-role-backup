@@ -1,7 +1,7 @@
 Ansible Role: Borgmatic Backup
 ==============================
 
-[![Build Status](https://travis-ci.org/newtonne/ansible-borgmatic-backup.svg?branch=master)](https://travis-ci.org/newtonne/ansible-borgmatic-backup)
+[![Build Status](https://travis-ci.org/newtonne/ansible-borgmatic_backup.svg?branch=master)](https://travis-ci.org/newtonne/ansible-borgmatic_backup)
 
 Installs [borgmatic](https://github.com/witten/borgmatic) and [borg](https://www.borgbackup.org), and configures the automated backup of files, as well as MySQL and PostgreSQL databases.
 
