@@ -1,0 +1,37 @@
+---
+- name: Check if borg is already installed
+  stat:
+    path: "{{ backup_borg_path }}"
+  register: backup_borg_stat
+
+- block:
+    - name: Import borg GPG public key
+      shell: gpg --recv-keys --keyserver {{ backup_borg_keyserver }} {{ backup_borg_gpg_fpr }}
+      register: backup_gpg_import
+      changed_when: "'imported: 1' in backup_gpg_import.stderr"
+
+    - name: Download borg binary and GPG sig file
+      get_url:
+        url: "{{ backup_borg_url }}/{{ backup_borg_version }}/{{ item }}"
+        dest: /tmp
+      with_items:
+        - "{{ backup_borg_asset }}"
+        - "{{ backup_borg_asset }}.asc"
+
+    - name: Verify borg binary against GPG sig file
+      command: gpg --verify {{ backup_borg_asset }}.asc {{ backup_borg_asset }}
+      args:
+        chdir: /tmp
+      changed_when: false
+
+    - name: Ensure borg binary is installed to destination path
+      command: mv /tmp/{{ backup_borg_asset }} {{ backup_borg_path }}
+      args:
+        creates: "{{ backup_borg_path }}"
+
+    - name: Ensure borg binary is executable
+      file:
+        path: "{{ backup_borg_path }}"
+        mode: 0755
+
+  when: not backup_borg_stat.stat.exists

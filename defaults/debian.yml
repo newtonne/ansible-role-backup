@@ -1,0 +1,6 @@
+---
+backup_borgmatic_dependencies:
+  - python3
+  - python-pip
+  - python-virtualenv
+backup_borgmatic_venv_python: python3

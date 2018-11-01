@@ -1,0 +1,5 @@
+---
+- name: Ensure borg GPG sig file is removed
+  file:
+    path: /tmp/{{ backup_borg_asset }}.asc
+    state: absent

@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+PATH={{ backup_cron_path }}
+
+{% for job in backup_cron_jobs %}
+
+  {{- job.schedule | default(job) }}
+  {{- ' %s' % backup_user }}
+  {{- ' %s' % backup_borgmatic_venv }}/bin/borgmatic
+  {%- if job.action | default(None) %}
+    {{- ' --%s' % job.action }}
+  {%- endif %}
+  {{- ' --config %s' % backup_config_directory }}/config.yaml
+  {{- ' --verbosity %d' % backup_verbosity }}
+  {{- ' >> %s' % backup_log_file }} 2>&1
+
+{% endfor %}

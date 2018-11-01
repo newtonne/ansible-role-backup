@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# {{ ansible_managed }}
+
+WORKDIR={{ backup_work_directory }}
+
+{% for db in backup_databases %}
+
+{%- if db.type == "mysql" %}
+
+DBNAME={{ db.name }}
+rm -rf $WORKDIR/${DBNAME}_dump
+
+{%- elif db.type == 'postgresql' %}
+
+DBNAME={{ db.name }}
+rm -rf $WORKDIR/${DBNAME}_dump
+
+{% endif %}
+
+{% endfor %}
+
+printf '\n\n%s\n' "$(date) - Completed backup"

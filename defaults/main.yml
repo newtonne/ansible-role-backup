@@ -1,0 +1,46 @@
+---
+backup_directories: []
+backup_databases: []
+
+backup_repositories: []
+
+backup_location_options: {}
+backup_storage_options: {}
+backup_retention_options: {}
+backup_consistency_options: {}
+
+backup_hooks_options:
+  before_backup:
+    - "{{ backup_hooks_directory }}/before.sh"
+  after_backup:
+    - "{{ backup_hooks_directory }}/after.sh"
+  on_error:
+    - "{{ backup_hooks_directory }}/error.sh"
+backup_hooks_globlist: hooks/*
+backup_hooks_directory: /etc/borgmatic/hooks
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+backup_cron_jobs:
+  - schedule: "0 3 * * *"
+backup_cron_path: "{{ backup_borg_path | dirname }}:/usr/bin:/bin"
+backup_verbosity: 0
+
+backup_user: root
+backup_group: root
+
+backup_config_directory: /etc/borgmatic
+backup_work_directory: /var/borgmatic
+backup_log_file: /var/log/borgmatic.log
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+backup_borg_keyserver: hkp://pool.sks-keyservers.net:80
+backup_borg_gpg_fpr: 6D5BEF9ADD2075805747B70F9F88FB52FAF7B393
+backup_borg_url: https://github.com/borgbackup/borg/releases/download
+backup_borg_asset: borg-linux{{ ansible_architecture [-2:] }}
+backup_borg_version: 1.1.7
+backup_borg_path: /usr/local/bin/borg
+
+backup_borgmatic_version: 1.2.9
+backup_borgmatic_venv: /etc/borgmatic/venv

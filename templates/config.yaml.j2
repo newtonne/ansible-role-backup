@@ -1,0 +1,37 @@
+# {{ ansible_managed }}
+
+location:
+    source_directories:
+{% for dir in backup_directories %}
+    - {{ dir }}
+{% endfor %}
+{% for db in backup_databases %}
+    - {{ backup_work_directory }}/{{ db.name }}_dump
+{% endfor %}
+    repositories:
+{% for repo in backup_repositories %}
+    - {{ repo }}
+{% endfor %}
+{% if backup_location_options %}
+    {{ backup_location_options | to_nice_yaml(indent=4) | indent(width=4) }}
+{% endif %}
+
+{% if backup_storage_options %}
+storage:
+    {{ backup_storage_options | to_nice_yaml(indent=4) | indent(width=4) }}
+{% endif %}
+
+{% if backup_consistency_options %}
+consistency:
+    {{ backup_consistency_options | to_nice_yaml(indent=4) | indent(width=4) }}
+{% endif %}
+
+{% if backup_retention_options %}
+retention:
+    {{ backup_retention_options | to_nice_yaml(indent=4) | indent(width=4) }}
+{% endif %}
+
+{% if backup_hooks_options %}
+hooks:
+    {{ backup_hooks_options | to_nice_yaml(indent=4) | indent(width=4) }}
+{% endif %}

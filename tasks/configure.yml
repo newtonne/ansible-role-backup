@@ -1,0 +1,49 @@
+---
+- name: Ensure config, hooks and work directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ backup_user }}"
+    group: "{{ backup_group }}"
+    mode: 0755
+  with_items:
+    - "{{ backup_config_directory }}"
+    - "{{ backup_hooks_directory }}"
+    - "{{ backup_work_directory }}"
+
+- name: Ensure backup log file exists
+  copy:
+    content: ""
+    dest: "{{ backup_log_file }}"
+    force: false
+    owner: "{{ backup_user }}"
+    group: "{{ backup_group }}"
+    mode: 0644
+
+- name: Copy borgmatic config
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ backup_config_directory }}/{{ item }}"
+    owner: "{{ backup_user }}"
+    group: "{{ backup_group }}"
+    mode: 0600
+  with_items:
+    - config.yaml
+
+- name: Copy borgmatic hook scripts
+  template:
+    src: "{{ item }}"
+    dest: "{{ backup_hooks_directory }}/{{ item | basename | regex_replace('\\.j2','') }}"
+    owner: "{{ backup_user }}"
+    group: "{{ backup_group }}"
+    mode: 0700
+  with_fileglob: "{{ backup_hooks_globlist }}"
+
+- name: Copy backup crontab
+  template:
+    src: cron.j2
+    dest: /etc/cron.d/borgmatic
+    owner: root
+    group: root
+    mode: 0644
+  when: backup_cron_jobs

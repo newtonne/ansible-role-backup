@@ -1,0 +1,13 @@
+---
+- name: Ensure borgmatic dependencies are installed
+  package:
+    name: "{{ item }}"
+  with_items: "{{ backup_borgmatic_dependencies }}"
+
+- name: Ensure borgmatic is installed
+  pip:
+    name: borgmatic
+    version: "{{ backup_borgmatic_version | default(omit) }}"
+    virtualenv: "{{ backup_borgmatic_venv | default(omit) }}"
+    virtualenv_python: "{{ backup_borgmatic_venv_python | default(omit) }}"
+    virtualenv_command: "{{ backup_borgmatic_venv_command | default(omit) }}"

@@ -1,0 +1,11 @@
+---
+- name: Include OS family-specific variables
+  include_vars: "../defaults/{{ ansible_os_family | lower }}.yml"
+
+- import_tasks: install-borg.yml
+
+- import_tasks: install-borgmatic.yml
+
+- import_tasks: configure.yml
+
+- import_tasks: cleanup.yml
