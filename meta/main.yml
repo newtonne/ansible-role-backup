@@ -3,7 +3,7 @@ galaxy_info:
   author: newtonne
   description: Backup files, and MySQL and PostgreSQL databases using borg and borgmatic.
 
-  license: BSD
+  license: MIT
 
   min_ansible_version: 2.4
 
