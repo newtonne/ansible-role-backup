@@ -203,7 +203,7 @@ Example Playbook
           - schedule: "0 2 * * *"
 
       roles:
-         - { role: borgmatic-backup }
+         - { role: borgmatic_backup }
 
 License
 -------
