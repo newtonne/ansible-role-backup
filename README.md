@@ -208,4 +208,4 @@ Example Playbook
 License
 -------
 
-BSD
+MIT
