@@ -9,11 +9,7 @@ lint:
     config-file: molecule/default/yaml-lint.yml
 platforms:
   - name: instance
-    image: centos:7
-  - name: instance
-    image: ubuntu:16.04
-  - name: instance
-    image: ubuntu:18.04
+    image: ${TEST_PLATFORM:-centos:7}
 provisioner:
   name: ansible
   lint:
