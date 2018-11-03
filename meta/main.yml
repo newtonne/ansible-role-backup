@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: newtonne
-  role_name: borgmatic_backup
+  role_name: backup
   description: Backup files, and MySQL and PostgreSQL databases using borg and borgmatic.
 
   license: MIT

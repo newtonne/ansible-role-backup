@@ -1,5 +1,5 @@
-Ansible Role: Borgmatic Backup
-==============================
+Ansible Role: Backup
+====================
 
 [![Build Status](https://travis-ci.org/newtonne/ansible-borgmatic_backup.svg?branch=master)](https://travis-ci.org/newtonne/ansible-borgmatic_backup)
 
@@ -203,7 +203,7 @@ Example Playbook
           - schedule: "0 2 * * *"
 
       roles:
-         - { role: borgmatic_backup }
+         - { role: newtonne.backup }
 
 License
 -------

@@ -4,7 +4,7 @@ services: docker
 
 env:
   global:
-    - ROLE_NAME: borgmatic_backup
+    - ROLE_NAME: backup
   matrix:
     - TEST_PLATFORM: centos:7
     - TEST_PLATFORM: ubuntu:16.04
@@ -17,8 +17,8 @@ install:
 before_script:
   # Use actual Ansible Galaxy role name for the project directory.
   - cd ../
-  - mv ansible-$ROLE_NAME $ROLE_NAME
-  - cd $ROLE_NAME
+  - mv ansible-role-$ROLE_NAME newtonne.$ROLE_NAME
+  - cd newtonne.$ROLE_NAME
 
 script:
   # Run tests.

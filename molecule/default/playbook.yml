@@ -15,4 +15,4 @@
       when: ansible_os_family == 'RedHat'
 
   roles:
-    - role: borgmatic_backup
+    - role: newtonne.backup
