@@ -16,7 +16,9 @@ mysqldump -u {{ db.user }} -p{{ db.pass }} $DBNAME > $WORKDIR/${DBNAME}_dump
 {%- elif db.type == 'postgresql' %}
 
 DBNAME={{ db.name }}
-pg_dump -U {{ db.user }} {{ '-h ' + db.host if db.host else '' }} {{ ('-p %s' % db.port) if db.port else '' }} -c $DBNAME -f $WORKDIR/${DBNAME}_dump
+pg_dump -c $DBNAME -U {{ db.user }} -f $WORKDIR/${DBNAME}_dump
+{%- if db.host | default(None) %}{{ ' -h ' + db.host }}{% endif %}
+{%- if db.port | default(None) %}{{ ' -p %s' % db.port }}{% endif %}
 
 {% endif %}
 
