@@ -8,7 +8,7 @@
     - name: Import borg GPG public key
       shell: gpg --recv-keys --keyserver {{ backup_borg_keyserver }} {{ backup_borg_gpg_fpr }}
       register: backup_gpg_import
-      changed_when: "'imported: 1' in backup_gpg_import.stderr"
+      changed_when: "'not changed' not in backup_gpg_import.stderr"
 
     - name: Download borg binary and GPG sig file
       get_url:
