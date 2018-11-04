@@ -47,3 +47,20 @@
     group: root
     mode: 0644
   when: backup_cron_jobs
+
+- name: Configure log rotation
+  copy:
+    dest: /etc/logrotate.d/borgmatic
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      # Ansible managed
+
+      {{ backup_log_file }} {
+        size 50M
+        rotate 8
+        compress
+        copytruncate
+        missingok
+      }
