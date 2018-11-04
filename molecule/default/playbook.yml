@@ -3,6 +3,15 @@
   hosts: all
   become: true
 
+  vars:
+    # Minimal vars to test file and database prune, create and check
+    backup_directories:
+      - /etc/passwd
+    backup_repositories:
+      - /tmp/testrepo
+    backup_retention_options:
+      keep_within: 1H
+
   pre_tasks:
     - name: Install cron (Debian)
       apt:
@@ -16,3 +25,9 @@
 
   roles:
     - role: newtonne.backup
+
+  post_tasks:
+    - name: Initiate test repo
+      command: /usr/local/bin/borg init --encryption none /tmp/testrepo
+      args:
+        creates: /tmp/testrepo
