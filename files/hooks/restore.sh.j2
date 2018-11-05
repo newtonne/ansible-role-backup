@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# {{ ansible_managed }}
+
+WORKDIR={{ backup_work_directory }}
+
+{% for db in backup_databases %}
+
+{%- if db.type == "mysql" %}
+
+DBNAME={{ db.name }}
+mysql -u {{ db.user }} -p{{ db.pass }} $DBNAME < $WORKDIR/${DBNAME}_dump
+rm -rf $WORKDIR/${DBNAME}_dump
+
+{%- elif db.type == 'postgresql' %}
+
+DBNAME={{ db.name }}
+psql -U {{ db.user }} $DBNAME < $WORKDIR/${DBNAME}_dump
+{%- if db.host | default(None) %}{{ ' -h ' + db.host }}{% endif %}
+{%- if db.port | default(None) %}{{ ' -p %s' % db.port }}{% endif %}
+rm -rf $WORKDIR/${DBNAME}_dump
+
+{% endif %}
+
+{% endfor %}
