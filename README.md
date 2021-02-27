@@ -1,7 +1,7 @@
 Ansible Role: Backup
 ====================
 
-[![Build Status](https://travis-ci.org/newtonne/ansible-role-backup.svg?branch=master)](https://travis-ci.org/newtonne/ansible-role-backup)
+[![CI](https://github.com/newtonne/ansible-role-backup/workflows/CI/badge.svg?event=push)]
 
 Installs [borgmatic](https://github.com/witten/borgmatic) and [borg](https://www.borgbackup.org), and configures the automated backup of files, as well as MySQL and PostgreSQL databases.
 
