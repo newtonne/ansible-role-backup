@@ -6,7 +6,7 @@
 
 - block:
     - name: Import borg GPG public key
-      shell: gpg --recv-keys --keyserver {{ backup_borg_keyserver }} {{ backup_borg_gpg_fpr }}
+      command: gpg --recv-keys --keyserver {{ backup_borg_keyserver }} {{ backup_borg_gpg_fpr }}
       register: backup_gpg_import
       changed_when: "'not changed' not in backup_gpg_import.stderr"
 
