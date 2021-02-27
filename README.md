@@ -1,7 +1,7 @@
 Ansible Role: Backup
 ====================
 
-[![CI](https://github.com/newtonne/ansible-role-backup/workflows/CI/badge.svg?event=push)]
+[![CI](https://github.com/newtonne/ansible-role-backup/workflows/CI/badge.svg?event=push)](https://github.com/newtonne/ansible-role-backup/actions?query=workflow%3ACI)
 
 Installs [borgmatic](https://github.com/witten/borgmatic) and [borg](https://www.borgbackup.org), and configures the automated backup of files, as well as MySQL and PostgreSQL databases.
 
