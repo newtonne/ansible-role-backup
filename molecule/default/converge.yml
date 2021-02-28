@@ -16,11 +16,13 @@
     - name: Install cron (Debian)
       apt:
         name: cron
+        update_cache: yes
       when: ansible_os_family == 'Debian'
 
     - name: Install cron (RedHat)
       yum:
         name: cronie
+        update_cache: yes
       when: ansible_os_family == 'RedHat'
 
   roles:
