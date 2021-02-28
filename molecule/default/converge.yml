@@ -13,13 +13,15 @@
       keep_within: 1H
 
   pre_tasks:
-    - name: Install cron (Debian)
+    - name: Install cron and dirmngr (Debian)
       apt:
-        name: cron
+        name:
+          - cron
+          - dirmngr
         update_cache: yes
       when: ansible_os_family == 'Debian'
 
-    - name: Install cron (RedHat)
+    - name: Install cronie (RedHat)
       yum:
         name: cronie
         update_cache: yes
