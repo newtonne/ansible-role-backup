@@ -1,0 +1,6 @@
+---
+backup_borgmatic_dependencies:
+  - centos-release-scl-rh
+  - rh-python36
+  - python-setuptools    # required by pip module in 2.7
+backup_borgmatic_venv_command: /opt/rh/rh-python36/root/bin/virtualenv
