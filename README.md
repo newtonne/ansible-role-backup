@@ -152,30 +152,9 @@ backup_borgmatic_version: 1.2.9
 The version of `borgmatic` to install using pip.
 
 ```
-backup_borgmatic_dependencies:
-  - python3                 # Debian family only
-  - python-pip              # Debian family only
-  - python-virtualenv       # Debian family only
-  - centos-release-scl-rh   # RedHat family only
-  - rh-python36             # RedHat family only
-  - python-setuptools       # RedHat family only
-```
-The dependencies that are required to install and run `borgmatic`. Note that, by default, the installed dependencies differ between Debian-based and RedHat-based distros.
-
-```
 backup_borgmatic_venv: /etc/borgmatic/venv
 ```
 The virtualenv into which pip will install `borgmatic`. It will be created if it doesn't already exist.
-
-```
-backup_borgmatic_venv_python: python3    # Debian family only
-```
-The python executable that will be used to create the `borgmatic` virtual environment.
-
-```
-backup_borgmatic_venv_command: /opt/rh/rh-python36/root/bin/virtualenv    # RedHat family only
-```
-The virtualenv executable that will be used to create the `borgmatic` virtual environment.
 
 Dependencies
 ------------
