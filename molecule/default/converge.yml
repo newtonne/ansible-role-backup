@@ -18,13 +18,13 @@
         name:
           - cron
           - dirmngr
-        update_cache: yes
+        update_cache: true
       when: ansible_os_family == 'Debian'
 
     - name: Install cronie (RedHat)
       yum:
         name: cronie
-        update_cache: yes
+        update_cache: true
       when: ansible_os_family == 'RedHat'
 
   roles:
