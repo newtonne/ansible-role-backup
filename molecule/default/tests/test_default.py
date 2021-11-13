@@ -9,7 +9,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_borg_installed(host):
     cmd = host.run('/usr/local/bin/borg --version')
-    assert cmd.stdout == 'borg 1.1.7\n'
+    assert cmd.stdout == 'borg 1.1.7'
 
 
 def test_borgmatic_installed(host):
