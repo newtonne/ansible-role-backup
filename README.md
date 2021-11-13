@@ -117,7 +117,7 @@ The file into which the `borgmatic` output will be logged.
 ### Installation-related
 
 ```
-backup_borg_keyserver: hkp://p80.pool.sks-keyservers.net:80
+backup_borg_keyserver: hkps://keys.openpgp.org
 ```
 The GPG keyserver from which to download the `borg` public key.
 
