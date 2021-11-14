@@ -3,7 +3,7 @@ Ansible Role: Backup
 
 [![CI](https://github.com/newtonne/ansible-role-backup/workflows/CI/badge.svg?event=push)](https://github.com/newtonne/ansible-role-backup/actions?query=workflow%3ACI)
 
-Installs [borgmatic](https://github.com/witten/borgmatic) and [borg](https://www.borgbackup.org), and configures the automated backup of files, as well as MySQL and PostgreSQL databases.
+Installs and configures [borgmatic](https://github.com/witten/borgmatic) and [borg](https://www.borgbackup.org), for automated backup of files, as well as MySQL and PostgreSQL databases.
 
 Requirements
 ------------
@@ -27,18 +27,14 @@ backup_directories: []
 The list of directories (or individual files) to backup.
 
 ```
-backup_databases: []
-#- name: my_mysql_database
-#  type: mysql
-#  user: backup_user
-#  pass: secret
-#- name: my_postgresql_database
-#  type: postgresql
-#  user: backup_user
-#  host: hostname
-#  port: 5433
+backup_mysql_databases: []
 ```
-The list of databases to backup. `type` can be mysql or postgresql. The available options for each are listed above. `name`, `type` and `user` are required.
+The list of MySQL databases to backup. See [borgmatic - database dump hooks](https://torsion.org/borgmatic/docs/how-to/backup-your-databases/#database-dump-hooks) for more info.
+
+```
+backup_postgresql_databases: []
+```
+The list of PostgreSQL databases to backup. See [borgmatic - database dump hooks](https://torsion.org/borgmatic/docs/how-to/backup-your-databases/#database-dump-hooks) for more info.
 
 ```
 backup_repositories: []
@@ -50,20 +46,14 @@ backup_location_options: {}
 backup_storage_options: {}
 backup_retention_options: {}
 backup_consistency_options: {}
-backup_hooks_options:
-  before_backup:
-    - "{{ backup_hooks_directory }}/before.sh"
-  after_backup:
-    - "{{ backup_hooks_directory }}/after.sh"
-  on_error:
-    - "{{ backup_hooks_directory }}/error.sh"
+backup_hooks_options: {}
 ```
-These variables can be used to supply extra configuration to `borgmatic`, such as the encryption passphrase for the `borg` repo or additional/alternative hook scripts/commands. See the [borgmatic schema](https://projects.torsion.org/witten/borgmatic/src/branch/master/borgmatic/config/schema.yaml) for the complete list of config options.
+These variables can be used to supply extra configuration to `borgmatic`, such as the encryption passphrase for the `borg` repo or additional/alternative hook scripts/commands. See the [borgmatic schema](https://projects.torsion.org/borgmatic-collective/borgmatic/src/tag/1.5.20/borgmatic/config/schema.yaml) for the complete list of config options.
 
 ```
 backup_hooks_globlist: hooks/*
 ```
-The glob patterns that the fileglob lookup will use to find hook scripts on the control machine. Don't remove the default item if you wish to use the hooks in the role's files/hooks directory.
+The glob patterns that the fileglob lookup will use to find hook scripts on the control machine.
 
 ```
 backup_hooks_directory: /etc/borgmatic/hooks
@@ -77,7 +67,7 @@ backup_cron_jobs
   - schedule: "0 3 * * *"
 #   action: create
 ```
-The list of cron time specifications and actions to perform. If no action is specified, `borgmatic` will perform all actions, that is, prune, create and check (see [borgmatic readme - a la carte](https://github.com/witten/borgmatic#À-la-carte)). If set to blank, no crontab will be configured.
+The list of cron time specifications and actions to perform. If no action is specified, `borgmatic` will perform all actions, that is, prune, create and check (see [borgmatic docs - set up backups](https://torsion.org/borgmatic/docs/how-to/set-up-backups/#backups)). If set to blank, no crontab will be configured.
 
 ```
 backup_cron_path: "{{ backup_borg_path | dirname }}:/usr/bin:/bin"
@@ -87,7 +77,7 @@ The value of `$PATH` to set at the top of the crontab.
 ```
 backup_verbosity: 0
 ```
-The verbosity with which to run `borgmatic`. See [borgmatic readme - verbosity](https://github.com/witten/borgmatic#verbosity).
+The verbosity with which to run `borgmatic`. See [borgmatic command-line reference](https://torsion.org/borgmatic/docs/reference/command-line/).
 
 ```
 backup_user: root
@@ -103,11 +93,6 @@ The group that will own the various backup-related files and directories.
 backup_config_directory: /etc/borgmatic
 ```
 The directory into which the `borgmatic` config file will be placed.
-
-```
-backup_work_directory: /var/borgmatic
-```
-The directory into which the database backups will be dumped.
 
 ```
 backup_log_file: /var/log/borgmatic.log
@@ -137,7 +122,7 @@ backup_borg_asset: borg-linux{{ ansible_architecture [-2:] }}
 The name of the `borg` binary asset to download.
 
 ```
-backup_borg_version: 1.1.7
+backup_borg_version: 1.1.17
 ```
 The version of the `borg` binary to download.
 
@@ -147,7 +132,7 @@ backup_borg_path: /usr/local/bin/borg
 The path to where the `borg` binary will be installed. Note that no attempt will be made to install `borg` if this file already exists.
 
 ```
-backup_borgmatic_version: 1.2.9
+backup_borgmatic_version: 1.5.20
 ```
 The version of `borgmatic` to install using pip.
 

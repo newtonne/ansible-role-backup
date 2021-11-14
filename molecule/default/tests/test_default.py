@@ -9,22 +9,19 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_borg_installed(host):
     cmd = host.run('/usr/local/bin/borg --version')
-    assert cmd.stdout == 'borg 1.1.7'
+    assert cmd.stdout == 'borg 1.1.17'
 
 
 def test_borgmatic_installed(host):
     pip_packages = host.pip_package.get_packages(
         pip_path='/etc/borgmatic/venv/bin/pip'
     )
-    assert pip_packages['borgmatic']['version'] == '1.2.9'
+    assert pip_packages['borgmatic']['version'] == '1.5.20'
 
 
 @pytest.mark.parametrize("name, mode", [
     ('/etc/borgmatic/config.yaml', 0o600),
-    ('/etc/borgmatic/hooks/after.sh', 0o700),
-    ('/etc/borgmatic/hooks/before.sh', 0o700),
     ('/etc/borgmatic/hooks/error.sh', 0o700),
-    ('/etc/borgmatic/hooks/restore.sh', 0o700),
     ('/etc/cron.d/borgmatic', 0o644),
     ('/etc/logrotate.d/borgmatic', 0o644),
     ('/var/log/borgmatic.log', 0o644),

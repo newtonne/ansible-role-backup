@@ -1,5 +1,5 @@
 ---
-- name: Ensure config, hooks and work directories exist
+- name: Ensure config and hooks directories exist
   file:
     path: "{{ item }}"
     state: directory
@@ -9,7 +9,6 @@
   with_items:
     - "{{ backup_config_directory }}"
     - "{{ backup_hooks_directory }}"
-    - "{{ backup_work_directory }}"
 
 - name: Ensure backup log file exists
   copy:
@@ -30,6 +29,10 @@
   with_items:
     - config.yaml
 
+- name: Validate borgmatic config
+  command: "{{ backup_borgmatic_venv }}/bin/validate-borgmatic-config --config {{ backup_config_directory }}"
+  changed_when: false
+
 - name: Copy borgmatic hook scripts
   template:
     src: "{{ item }}"
@@ -46,7 +49,7 @@
     owner: root
     group: root
     mode: 0644
-  when: backup_cron_jobs
+  when: backup_cron_jobs | length
 
 - name: Configure log rotation
   copy:
