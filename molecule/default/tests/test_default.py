@@ -13,7 +13,7 @@ def test_borg_installed(host):
 
 
 def test_borgmatic_installed(host):
-    pip_packages = host.pip_package.get_packages(
+    pip_packages = host.pip.get_packages(
         pip_path='/etc/borgmatic/venv/bin/pip'
     )
     assert pip_packages['borgmatic']['version'] == '1.5.20'
