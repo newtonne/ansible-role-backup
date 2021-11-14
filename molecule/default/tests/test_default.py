@@ -21,7 +21,6 @@ def test_borgmatic_installed(host):
 
 @pytest.mark.parametrize("name, mode", [
     ('/etc/borgmatic/config.yaml', 0o600),
-    ('/etc/borgmatic/hooks/error.sh', 0o700),
     ('/etc/cron.d/borgmatic', 0o644),
     ('/etc/logrotate.d/borgmatic', 0o644),
     ('/var/log/borgmatic.log', 0o644),
